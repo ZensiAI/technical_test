@@ -4,6 +4,8 @@
 
 **_Editar este README con la informacion solicitada en la prueba._**
 
+---
+
 ## Objetivos
 
 El propósito de esta prueba es evaluar las habilidades y capacidades del postulante en los siguientes aspectos:
@@ -17,6 +19,8 @@ El propósito de esta prueba es evaluar las habilidades y capacidades del postul
 
 - Validar la atención al detalle al cumplir con las especificaciones proporcionadas en la prueba.
 - Identificar si el postulante puede completar tareas siguiendo los lineamientos establecidos en el enunciado de la prueba.
+
+---
 
 ## Instrucciones generales
 
@@ -35,11 +39,15 @@ El propósito de esta prueba es evaluar las habilidades y capacidades del postul
    - Mantén un código limpio, legible y comentado cuando sea necesario.
    - Utiliza las mejores prácticas de desarrollo para demostrar tu experiencia técnica.
 
+---
+
 ## Tecnologías recomendadas
 
 - **HTML5, CSS3, JavaScript/TypeScript** para la interfaz.
 - Frameworks o bibliotecas populares (como **Vue.js**(recomendado), **React**, o **Angular**) son bienvenidos.
 - Opcional: herramientas como **Vite**, o **vitest** para gestionar la construcción del proyecto.
+
+---
 
 ## Evaluación
 
@@ -75,6 +83,8 @@ El propósito de esta prueba es evaluar las habilidades y capacidades del postul
 - Repositorio GIT: [Repositorio GIT](https://github.com/ZensiAI/technical_test)
 - Para la autenticación del usuario: [Auth - DummyJSON](https://dummyjson.com/docs/auth)
 - Para la obtención de los datos: [Dólar anual](https://docs.boostr.cl/reference/economy-dolar-year)
+
+---
 
 Si tienes alguna pregunta sobre la prueba o encuentras algún inconveniente, no dudes en comunicarte con nosotros.
 
