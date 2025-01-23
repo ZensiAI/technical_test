@@ -1,8 +1,11 @@
 <template>
-  <div class="dashboard-container">
-    <h2>Dashboard - Gráfico del Dólar Anual</h2>
+  <div class="dashboard-container position-relative p-3">
+    <h2 class="mt-4 mb-5">Dashboard - Gráfico del Dólar Anual</h2>
 
-    <button @click="logout" class="btn btn-secondary mb-3">
+    <button
+      @click="logout"
+      class="btn btn-secondary position-absolute top-0 end-0 m-3"
+    >
       Cerrar Sesión
     </button>
 
@@ -12,114 +15,119 @@
     <apexchart
       v-if="!loading && !errorMessage && chartSeries[0].data.length"
       type="line"
-      height="350"
+      :width="chartWidth"
+      :height="chartHeight"
       :options="chartOptions"
       :series="chartSeries"
+      class="mb-5" 
     />
   </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { onMounted, ref } from 'vue'
+import { useRouter } from 'vue-router'
 
-const loading = ref(false);
-const errorMessage = ref('');
+interface DolarData {
+  date: string;
+  value: string; 
+}
+
+const loading = ref(false)
+const errorMessage = ref('')
+
+const chartWidth = ref('100%')
+const chartHeight = ref('500px') 
 
 const chartOptions = ref({
   chart: {
-    id: 'dolar-chart',
-  },
-  xaxis: {
-    categories: [] as string[],
-  },
-  yaxis: {
-    title: {
-      text: 'Valor Dólar',
-    },
+    id: 'dolar-chart'
   },
   title: {
     text: 'Dólar Histórico (Anual)',
     align: 'center',
+    offsetY: 20
   },
-});
+  xaxis: {
+    categories: [] as string[]
+  },
+  yaxis: {
+    title: {
+      text: 'Valor Dólar'
+    }
+  }
+})
 
 const chartSeries = ref([
   {
     name: 'Dólar',
-    data: [] as number[],
-  },
-]);
+    data: [] as number[]
+  }
+])
 
-const router = useRouter();
+const router = useRouter()
 
 onMounted(() => {
-  checkAuth();
-  fetchDolarData();
-});
+  checkAuth()
+  fetchDolarData()
+})
 
 function checkAuth() {
-  const token = localStorage.getItem('authToken');
+  const token = localStorage.getItem('authToken')
   if (!token) {
-    router.push('/');
+    router.push('/')
   }
 }
 
 function logout() {
-  localStorage.removeItem('authToken');
-  router.push('/');
-}
-
-interface DolarData {
-  fecha: string;
-  valor: string;
+  localStorage.removeItem('authToken')
+  router.push('/')
 }
 
 async function fetchDolarData() {
-  loading.value = true;
-  errorMessage.value = '';
+  loading.value = true
+  errorMessage.value = ''
 
   try {
-    const year = 2023;
-
-    const response = await fetch(`https://api.boostr.cl/economy/indicator/dolar/${year}.json`);
+    const year = 2023
+    const response = await fetch(`https://api.boostr.cl/economy/indicator/dolar/${year}.json`)
 
     if (!response.ok) {
-      throw new Error(`Fallo al obtener datos del dólar (status: ${response.status})`);
+      throw new Error(`Fallo al obtener datos del dólar (status: ${response.status})`)
     }
 
-    const responseJson: { status: string; data: DolarData[] } = await response.json();
-    console.log('API Response:', responseJson);
+    const responseJson = await response.json()
+    console.log('API Response:', responseJson)
 
     if (responseJson.status !== 'success') {
-      throw new Error('La respuesta no indica "success"');
+      throw new Error('La respuesta no indica "success"')
     }
-
     if (!Array.isArray(responseJson.data)) {
-      throw new Error('La propiedad "data" no es un array');
+      throw new Error('La propiedad "data" no es un array')
     }
 
-    const dates = responseJson.data.map((item) => item.fecha);
-    const values = responseJson.data.map((item) => parseFloat(item.valor));
+    const data: DolarData[] = responseJson.data;
+    const dates = data.map((item) => item.date)
+    const values = data.map((item) => parseFloat(item.value))
 
-    console.log('Fechas:', dates);
-    console.log('Valores numéricos:', values);
-
-    chartOptions.value.xaxis.categories = dates;
-    chartSeries.value[0].data = values;
-  } catch (err) {
-    console.error(err);
-    errorMessage.value = (err as Error).message || 'Error al cargar datos';
+    chartOptions.value.xaxis.categories = dates
+    chartSeries.value[0].data = values
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      errorMessage.value = err.message || 'Error al cargar datos';
+    } else {
+      errorMessage.value = 'Error desconocido';
+    }
   } finally {
-    loading.value = false;
+    loading.value = false
   }
 }
 </script>
 
 <style scoped>
 .dashboard-container {
-  margin: 1rem auto;
-  max-width: 600px;
+  max-width: 900px; 
+  margin: 0 auto;
   text-align: center;
 }
 
