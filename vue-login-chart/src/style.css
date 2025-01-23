@@ -1,0 +1,51 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color-scheme: light dark;
+  color: #fff;
+}
+
+body {
+  background-color: #242424;
+  color: #fff;
+}
+  
+@media (prefers-color-scheme: light) {
+  body {
+    background-color: #ffffff;
+    color: #213547;
+  }
+}
+
+@media (min-width: 720px) {
+  .login-container {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  
+  .dashboard-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+}
+
+.form-control {
+  color: #333333; 
+}
+
+.form-control::placeholder {
+  color: #888888; 
+}
+
+.form-control:focus {
+  border-color: #007bff; 
+  box-shadow: none;
+}
+
+.form-control:active {
+  background-color: #f0f0f0; 
+}
+
+
