@@ -72,9 +72,11 @@ async function handleLogin() {
     localStorage.setItem('authToken', data.token)
     router.push('/dashboard')
   } catch (err) {
+    console.error(err)
     errorMessage.value = 'Error de conexión o de servidor'
   }
 }
+
 </script>
 
 <style scoped>
